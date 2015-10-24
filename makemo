@@ -1,8 +1,16 @@
 #!/bin/bash
-FILE_C=$1
-SIZE_P=`expr length $FILE_C`
-SIZE_SS=`expr $SIZE_P - 2`
-PKG_NM=`expr substr $FILE_C 1 $SIZE_SS`
-PODIR="po"
-IDESLC="idioma/es/LC_MESSAGES"
-msgfmt -c -v -o $IDESLC/$PKG_NM.mo $PODIR/es.po
+if [ $1 ]; then
+   if [ -f $1 ]; then
+       FILE_C=$1
+       SIZE_P=`expr length $FILE_C`
+       SIZE_SS=`expr $SIZE_P - 2`
+       PKG_NM=`expr substr $FILE_C 1 $SIZE_SS`
+       PODIR="po"
+       IDESLC="idioma/es/LC_MESSAGES"
+       msgfmt -c -v -o $IDESLC/$PKG_NM.mo $PODIR/es.po
+    else 
+       echo No existe el archivo
+    fi
+else
+   echo use $0 archivo.c
+fi          
