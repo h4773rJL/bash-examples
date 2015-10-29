@@ -1,0 +1,55 @@
+#!/bin/bash
+PODIR="po"
+ESDIR="es"
+ENDIR="en"
+LCMES="LC_MESSAGES"
+IDDIR="idioma"
+
+function try_lcmes {
+	cd $1
+	if [ -d $2 ]; then
+       echo tambien existe el subdirectorio $2 dentro de $1
+    else
+       echo entrar a $1 y crear $2
+	   
+       mkdir $2
+       
+    fi
+    cd ..
+}
+
+function try_langsd {
+	cd $1
+	if [ -d $2 ]; then
+       echo ya existe el directorio $2 dentro de $1
+       try_lcmes $2 $3
+    else
+       echo crear $2 y $2/$3
+       mkdir $2
+       mkdir $2/$3
+    fi
+    cd ..
+}
+
+
+if [ -d $PODIR ]; then
+   echo Ya existe el directorio $PODIR
+else
+   mkdir $PODIR
+   echo se creo el directorio $PODIR
+fi
+
+if [ -d $IDDIR ]; then
+   echo Ya existe el directorio $IDDIR
+   try_langsd $IDDIR $ESDIR $LCMES
+   try_langsd $IDDIR $ENDIR $LCMES
+else
+   mkdir $IDDIR
+   mkdir $IDDIR/$ESDIR
+   mkdir $IDDIR/$ESDIR/$LCMES
+   mkdir $IDDIR/$ENDIR
+   mkdir $IDDIR/$ENDIR/$LCMES
+   echo directorios creados
+   
+fi
+tree
